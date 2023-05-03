@@ -20,6 +20,7 @@ int main(int argc, char* argv[])
     Polyhedron scanmesh;
     CGAL::IO::read_OBJ("../../test/mesh1.obj", scanmesh);
     LoadLabels(scanmesh, "../../test/mesh1.json");
+    scanmesh.WriteOBJ("../../test/out1.obj");
     SmoothSegmentation(scanmesh);
     scanmesh.WriteOBJ("../../test/out.obj");
 

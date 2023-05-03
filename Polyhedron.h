@@ -26,6 +26,7 @@ public:
     MyVertex(const Point& p, int label) : CGAL::HalfedgeDS_vertex_base<Refs, CGAL::Tag_true, Point>(p), _label(label) {}
 public:
     int _label{ 0 };
+    bool _is_const = false;
 };
 
 template <class Refs>
@@ -179,6 +180,25 @@ public:
     friend inline typename boost::graph_traits<Polyhedron>::faces_size_type get(FaceLabelMap& m, boost::graph_traits<Polyhedron>::face_descriptor hf )
     {
         return hf->_label;   
+    }
+};
+
+class VertexIsConstMap
+{
+public:
+    using value_type = bool;
+    using referece_type = value_type;
+    using key_type = boost::graph_traits<Polyhedron>::vertex_descriptor;
+    using category = boost::read_write_property_map_tag;
+
+    friend inline value_type get(VertexIsConstMap& m, key_type hv )
+    {
+        return hv->_is_const;
+    }
+
+    friend inline void put(VertexIsConstMap& m, key_type hv, value_type v)
+    {
+        hv->_is_const = v;
     }
 };
 #endif //ELASTICITY_POLYHEDRON_H
